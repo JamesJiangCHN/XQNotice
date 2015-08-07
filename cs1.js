@@ -8,7 +8,7 @@ function getLocalTime(timeNs) {
 
 function check(){
 	var hour = new Date().getHours()
-	if(hour>8 || hour<15)
+	if(hour>8 && hour<16)
 	{
 		$.get("http://xueqiu.com/cubes/rebalancing/history.json?cube_symbol=ZH191982&count=1&page=1",		
 		function(data){
