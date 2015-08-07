@@ -22,7 +22,7 @@
 	] , 
 	"content_scripts": [ 
 		{ 
-			"matches": ["http://*/*", "https://*/*"], 
+			"matches": ["http://xueqiu.com/*"], 
 			"js": ["jquery-2.1.4.min.js","cs1.js"],
 			"icons": {		
 				"128": "icon128.png"

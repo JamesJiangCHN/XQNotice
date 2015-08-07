@@ -54,7 +54,7 @@ $(document).ready(function(){
 		}else if(request.cmd=='getNewsArr'){
 			sendResponse({'arr':g_newsArr});
 		}else if(request.cmd=='notify'){
-			notify(request.type, request.count);
+			notify(request.type, request.mesg);
 			sendResponse('ok');
 		}
 	})
@@ -63,14 +63,14 @@ chrome.windows.onRemoved.addListener(function (windowId){
 		console.log('ddd');
 });
 
-function notify(ntype,count){
+function notify(ntype,mesg){
 	var opt=null;
 	switch(ntype){
 		case 'basic':
 			opt= {
 			type: ntype,
-			title: "桌面提醒",
-			message: "中大奖了！"+count,
+			title: "组合有更新",
+			message: mesg,
 			iconUrl: "icon128.png",
 			
 		  }
