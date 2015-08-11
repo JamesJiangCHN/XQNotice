@@ -1,8 +1,8 @@
+
 var count = 0;
 
-
 function getLocalTime(timeNs) {     
-    return new Date(parseInt(timeNs)).toLocaleString().substr(0,17)
+    return new Date(parseInt(timeNs)).toLocaleString()
 } 
 
 function check(){
@@ -15,9 +15,12 @@ function check(){
 			if(data.totalCount > count)
 			{
 				count = data.totalCount;
-				var put_str = ""
-				var stock_data = data.list[0].rebalancing_histories[0];
-				put_str = "\t"+count+" : "+getLocalTime(stock_data.created_at)+"\r\n\t"+stock_data.stock_name+"("+stock_data.stock_symbol+")  ￥"+stock_data.price+ "\r\n\t变更情况："+stock_data.prev_weight+"% -> "+stock_data.target_weight+"%";
+				var put_str = "  "
+				var stock_datas = data.list[0].rebalancing_histories;	
+				put_str+= count+" : "+getLocalTime(stock_datas[0].created_at)+"\n";				
+				$.each(stock_datas,function(index,item){
+					put_str += "  "+item.stock_name+"("+item.stock_symbol+")  ￥"+item.price+ "\n  "+item.prev_weight+"% -> "+item.target_weight+"%  \n";
+				});
 				chrome.extension.sendMessage({cmd: "notify",type:"basic", mesg:put_str},function(response) {});
 			}	
 		});	
