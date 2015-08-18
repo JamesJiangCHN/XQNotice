@@ -1,8 +1,8 @@
 
 var count = 0;
 
-function getLocalTime(timeNs) {     
-    return new Date(parseInt(timeNs)).toLocaleString()
+function getLocalTime(timeMs) {     
+    return new Date(parseInt(timeMs)).toLocaleString()
 } 
 
 function check(){
