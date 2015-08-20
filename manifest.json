@@ -22,7 +22,7 @@
 	] , 
 	"content_scripts": [ 
 		{ 
-			"matches": ["http://xueqiu.com/*"], 
+			"matches": ["http://xueqiu.com/7739010226"], 
 			"js": ["jquery-2.1.4.min.js","popup.js"],
 			"icons": {		
 				"128": "icon128.png"
