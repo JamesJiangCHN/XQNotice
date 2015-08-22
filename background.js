@@ -1,56 +1,56 @@
+/*
+created 2014-04-27 by qq1833183060
 
-var map={};
+*/
 
-function getLocalTime(timeMs) {     
-    return new Date(parseInt(timeMs)).toLocaleString()
-} 
 
-function getZhStatus(zhCode)
-{
-    $.get("http://xueqiu.com/cubes/rebalancing/history.json?cube_symbol="+zhCode+"&count=1&page=1",		
-    function(data){
-
-        var count = map[zhCode];
-        if(count==null)
-        {
-            count = 0;
-        }
-        if(data.totalCount > count)
-        {
-            map[zhCode] = data.totalCount;
-            var put_str = "  "
-            var stock_datas = data.list[0].rebalancing_histories;	
-            put_str+= count+" : "+getLocalTime(stock_datas[0].created_at)+"\n";				
-            $.each(stock_datas,function(index,item){
-                put_str += "  "+item.stock_name+"("+item.stock_symbol+")  ￥"+item.price+ "\n  "+item.prev_weight+"% -> "+item.target_weight+"%  \n";
-            });
-            //chrome.extension.sendMessage({cmd: "notify",type:"basic", mesg:put_str},function(response) {});
-            notify("basic", put_str);
-        }	
-    });	
-}
-
-function check(){
-    var zhKey;
-    var zhValue;
-    //notify("debug", "len:"+window.localStorage.length);
-	var hour = new Date().getHours()
-	if(hour>8 && hour<16)
-	{
-		for(var i=0,len=window.localStorage.length;i<len;i++){
-            zhKey=window.localStorage.key(i);
-            zhValue=window.localStorage.getItem(zhKey)
-            getZhStatus(zhValue)
-        }
-	}
-	
+function getCurIp(){	
+	$.ajax({
+		url:"http://www.ip38.com/",
+		type:"GET",
+		dataType: "text",
+		async:false,				
+		timeout: 1e4,		
+		success:function(data, t, jqXHR){	
+//<LI>您的本机IP地址：
+//    111.12.126.16    &nbsp;&nbsp;来自：</strong><span id="ipad"> 稍等,查询中.... </span></LI>	
+			var reg=/您的本机IP地址：\s.*?(\d*\.\d*\.\d*\.\d*)/;
+			var result=reg.exec(data);
+			console.log(result[0]);
+			console.log(result[1]);
+			
+			console.log('成功获取本机ip');
+			curIp=result[1];
+			alert(curIp);
+			if(result[1]!=undefined){
+				
+			}else{
+				clearTimeout(getCurIp);
+				setTimeout(getCurIp,5000);
+			}			
+		},
+		error:function( jqXHR, textStatus, errorThrown) {
+			console.log("Disconnect error");
+			console.log(textStatus)
+			console.log(jqXHR.status)
+			clearTimeout(getCurIp);
+			alert(textStatus);
+			alert(jqXHR.status);
+			//setTimeout(getCurIp,5000);
+		}
+	});
 }
 var g_newsArr=null;
 $(document).ready(function(){
+	//getCurIp();
+	try{
+	g_newsArr=JSON.parse(''+localStorage['newsArr']);
+	}catch(c){}
 	chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 		if(request.cmd=='setNewsArr'){
 			console.log(request.arr)
 			g_newsArr=request.arr;
+			localStorage['newsArr']=JSON.stringify(g_newsArr);
 		}else if(request.cmd=='getNewsArr'){
 			sendResponse({'arr':g_newsArr});
 		}else if(request.cmd=='notify'){
@@ -58,9 +58,7 @@ $(document).ready(function(){
 			sendResponse('ok');
 		}
 	})
-    setInterval(check, 10000); 
 });
-
 chrome.windows.onRemoved.addListener(function (windowId){
 		console.log('ddd');
 });
@@ -75,16 +73,7 @@ function notify(ntype,mesg){
 			message: mesg,
 			iconUrl: "icon128.png",
 			
-            }
-			break;
-        case 'debug':
-			opt= {
-			type: 'basic',
-			title: "调试",
-			message: mesg,
-			iconUrl: "icon128.png",
-			
-            }
+		  }
 			break;
 		case 'image':
 			opt= {
