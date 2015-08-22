@@ -35,7 +35,7 @@ $(document).ready(function(){
 	var MaxInputs       = 8; //maximum input boxes allowed  
 	var InputsWrapper   = $("#InputsWrapper"); //Input boxes wrapper ID  
 	var AddButton       = $("#AddMoreFileBox"); //Add button ID  
-	  
+	var SaveButton      = $("#SaveBtn");
 	var x = InputsWrapper.length; //initlal text box count  
 	var FieldCount=1; //to keep track of text box added  
 	  
@@ -47,7 +47,7 @@ $(document).ready(function(){
 				$(InputsWrapper).append('<div style="margin:10px 0"><input type="text" name="mytext[]" id="field_'+ FieldCount +'" value="Text '+ FieldCount +'"/><a href="#" class="removeclass">×</a></div>');  
 				x++; //text box increment  
 			}  
-	return false;  
+            return false;  
 	});  
 	  
 	$("body").on("click",".removeclass", function(e){ //user click on remove text  
@@ -55,6 +55,12 @@ $(document).ready(function(){
 					$(this).parent('div').remove(); //remove text box  
 					x--; //decrement textbox  
 			}  
-	return false;  
-	})   
+            return false;  
+	})  
+
+    $(SaveButton).click(function (e){  //on add input button click  
+		chrome.storage.local.set({'value': 'value1'}, function() {
+            alert('存储成功')       
+        }); 
+	});      
 });
