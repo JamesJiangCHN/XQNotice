@@ -1,30 +1,5 @@
 ﻿
 regZh=/^ZH\d{6}$/;  
-function getZhDetail(id, zhSymbol)
-{
-    $.get("http://xueqiu.com/cubes/quote.json?code="+zhSymbol+"&return_hasexist=false&_="+new Date().getTime(),		
-        function(data){
-            if(data.error_description == null){
-                $("#"+id).next("a").remove();
-                var zhName = data[zhSymbol].name
-                if (zhName.length > 5) { 
-                    zhName = zhName.substring(0,5)+"…"
-                }
-                $("#"+id).after('<a href="http://xueqiu.com/P/'+zhSymbol+'" target="_blank">'+zhName+'</a>');
-                //chrome.extension.sendMessage({cmd: "notify",type:"basic", mesg:data[zhSymbol].name},function(response) {});
-            }
-            else{
-                $("#"+id).next("a").remove();
-                $("#"+id).after('<a href="#">不存在</a>');
-                //chrome.extension.sendMessage({cmd: "notify",type:"basic", mesg:"组合 "+zhSymbol+" 不存在"},function(response) {});
-            }
-    }).fail(function() {
-        $("#"+id).next("a").remove();
-        $("#"+id).after('<a href="#">不存在</a>');
-        //chrome.extension.sendMessage({cmd: "notify",type:"basic", mesg:"组合 "+zhSymbol+" 不存在"},function(response) {});
-  });	
-}
-
 function checkZhDetail(id, zhSymbol)
 {
     $.get("http://xueqiu.com/cubes/quote.json?code="+zhSymbol+"&return_hasexist=false&_="+new Date().getTime(),		
@@ -72,7 +47,6 @@ $(document).ready(function(){
             zhName=window.localStorage.getItem(zhSymbol)
             
             $(InputsWrapper).append('<div style="margin:10px 0"><a href="#" class="removeclass">×</a><input type="text" style="width:128px;" class="zhItem"  id="zh_'+ i +'" value="'+zhSymbol+'"/><a href="http://xueqiu.com/P/'+zhSymbol+'" target="_blank">'+zhName+'</a></div>'); 
-            //getZhDetail("zh_"+ zhKey, zhValue)
             x++;  
             sumCount++; //text box added increment              
         }
@@ -117,8 +91,5 @@ $(document).ready(function(){
             }
             
         })
-        //$.each($(".zhItem"), function(i,val){  
-        //    window.localStorage.setItem(index,element.value);  
-        //});  
 	});      
 });
