@@ -31,16 +31,14 @@ function getZhStatus(zhCode)
 }
 
 function check(){
-    var zhKey;
-    var zhValue;
+    var zhSymbol;
     //notify("debug", "len:"+window.localStorage.length);
 	var hour = new Date().getHours()
 	if(hour>8 && hour<16)
 	{
 		for(var i=0,len=window.localStorage.length;i<len;i++){
-            zhKey=window.localStorage.key(i);
-            zhValue=window.localStorage.getItem(zhKey)
-            getZhStatus(zhValue)
+            zhSymbol=window.localStorage.key(i);
+            getZhStatus(zhSymbol)
         }
 	}
 	
