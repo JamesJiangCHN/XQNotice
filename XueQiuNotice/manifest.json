@@ -29,7 +29,7 @@
 			"icons": {		
 				"128": "images/xq_128.png"
 			},
-			"web_accessible_resources": [ "icon128.png"]
+			"web_accessible_resources": [ "images/xq_128.png"]
 			
 		} 
 	] 
