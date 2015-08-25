@@ -1,7 +1,7 @@
 { 
 	"manifest_version": 2, 
 	"name": "雪球通知", 
-	"version": "1.3", 
+	"version": "1.4", 
 	"description": "雪球通知.",
 	"icons": {
 		"128": "images/xq_128.png"

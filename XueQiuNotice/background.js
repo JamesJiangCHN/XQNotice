@@ -71,7 +71,7 @@ function notify(ntype,mesg){
 			type: ntype,
 			title: "组合有更新",
 			message: mesg,
-			iconUrl: "icon128.png",
+			iconUrl: "images/xq_128.png",
 			
             }
 			break;
@@ -80,7 +80,7 @@ function notify(ntype,mesg){
 			type: 'basic',
 			title: "调试",
 			message: mesg,
-			iconUrl: "icon128.png",
+			iconUrl: "images/xq_128.png",
 			
             }
 			break;
@@ -89,7 +89,7 @@ function notify(ntype,mesg){
 			type: ntype,
 			title: "桌面提醒",
 			message: "中大奖了！",
-			iconUrl: "icon128.png",
+			iconUrl: "images/xq_128.png",
 			imageUrl:"image.jpg",
 		  }
 		break;
@@ -98,7 +98,7 @@ function notify(ntype,mesg){
 			type: ntype,
 			title: "桌面提醒",
 			message: "中大奖了！",
-			iconUrl: "icon128.png",
+			iconUrl: "images/xq_128.png",
 			items: [{ title: "1.", message: "下班了"},
 					{ title: "2.", message: "吃饭了."},
 					{ title: "3.", message: "中奖了."}]
@@ -109,7 +109,7 @@ function notify(ntype,mesg){
 			type: ntype,
 			title: "桌面提醒",
 			message: "当前进度...",
-			iconUrl: "icon128.png",			
+			iconUrl: "images/xq_128.png",			
 			progress:80
 			}
 		break;
