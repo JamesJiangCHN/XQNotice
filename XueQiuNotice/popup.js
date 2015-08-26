@@ -29,7 +29,7 @@ function checkZhDetail(id, zhSymbol)
 $(document).ready(function(){
 	var zhKey;
     var zhValue;
-	var MaxInputs       = 8; //maximum input boxes allowed  
+	var MaxInputs       = 5; //maximum input boxes allowed  
 	var InputsWrapper   = $("#InputsWrapper"); //Input boxes wrapper ID  
 	var AddButton       = $("#AddMoreFileBox"); //Add button ID  
 	var SaveButton      = $("#SaveBtn");
