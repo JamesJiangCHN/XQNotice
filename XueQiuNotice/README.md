@@ -9,6 +9,10 @@ XQNotice V1.4
 ------------  
 通过雪球界面添加组合  
 组合云存储
+https://im6.xueqiu.com/im-comet/v2/notifications/5929241/ping.json?user_id=7739010226  0~9
+https://im4.xueqiu.com/im-comet/v2/notifications/5929241/comet.json?user_id=7739010226&_=1440683146371 
+https://im2.xueqiu.com/im-comet/v2/notifications/4502508/primary.json?user_id=7739010226
+http://xueqiu.com/v4/stock/quotec.json?code=DJI30&_=1440683146225    //道琼斯指数
    
   
 更新历史
