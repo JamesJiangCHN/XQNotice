@@ -26,13 +26,30 @@ function checkZhDetail(id, zhSymbol)
   });	
 }
 
+function saveZhToWeb()
+{
+    var zhString = "";
+    var zhSymbol ;
+    for(var i=0,len=window.localStorage.length;i<len;i++)
+    {
+        zhSymbol=window.localStorage.key(i);
+        zhString+=zhSymbol+","; 
+    }
+    $.get("http://zplan.club/insert.php?zhList="+zhString,		
+        function(data){
+    });	
+}
+
 $(document).ready(function(){
 	var zhKey;
     var zhValue;
+    var zhSymbol;
+    var zhName;
 	var MaxInputs       = 5; //maximum input boxes allowed  
 	var InputsWrapper   = $("#InputsWrapper"); //Input boxes wrapper ID  
 	var AddButton       = $("#AddMoreFileBox"); //Add button ID  
 	var SaveButton      = $("#SaveBtn");
+    var SyncButton      = $("#SyncBtn");
 	var x = 0;          //initlal text box count  
 	var sumCount=1;     //to keep track of text box added  
     
@@ -77,6 +94,7 @@ $(document).ready(function(){
     $(SaveButton).click(function (e){  //on add input button click  
         window.localStorage.clear();
         var errzh="" ;
+       
         $(".zhItem").each(function(index,element){  
             var zhSymbol = element.value.trim().toUpperCase();
             if(zhSymbol.length > 0){
@@ -91,5 +109,9 @@ $(document).ready(function(){
             }
             
         })
-	});      
+	}); 
+
+    $(SyncButton).click(function (e){  //on add input button click  
+        saveZhToWeb();
+	});     
 });
