@@ -35,6 +35,7 @@ function saveZhToWeb()
         zhSymbol=window.localStorage.key(i);
         zhString+=zhSymbol+","; 
     }
+    zhString=zhString.substring(0,zhString.length-1)
     $.get("http://zplan.club/insert.php?zhList="+zhString,		
         function(data){
     });	
