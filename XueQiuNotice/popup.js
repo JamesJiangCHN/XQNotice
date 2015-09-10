@@ -1,5 +1,9 @@
 ﻿
 regZh=/^ZH\d{6}$/;  
+var x = 0;          //initlal text box count  
+var sumCount=1;     //to keep track of text box added 
+var MaxInputs       = 5; //maximum input boxes allowed  
+
 function checkZhDetail(id, zhSymbol)
 {
     $.get("http://xueqiu.com/cubes/quote.json?code="+zhSymbol+"&return_hasexist=false&_="+new Date().getTime(),		
@@ -26,6 +30,26 @@ function checkZhDetail(id, zhSymbol)
   });	
 }
 
+function checkZhDetailAndSave(zhSymbol)
+{
+    $.get("http://xueqiu.com/cubes/quote.json?code="+zhSymbol+"&return_hasexist=false&_="+new Date().getTime(),		
+        function(data){
+            if(data.error_description == null){
+                var zhName = data[zhSymbol].name
+                if (zhName.length > 5) { 
+                    zhName = zhName.substring(0,5)+"…"
+                }
+                window.localStorage.setItem(zhSymbol,zhName);  
+                //chrome.extension.sendMessage({cmd: "notify",type:"basic", mesg:data[zhSymbol].name},function(response) {});
+            }
+            else{
+                //chrome.extension.sendMessage({cmd: "notify",type:"basic", mesg:"组合 "+zhSymbol+" 不存在"},function(response) {});
+            }
+    }).fail(function() {
+        //chrome.extension.sendMessage({cmd: "notify",type:"basic", mesg:"组合 "+zhSymbol+" 不存在"},function(response) {});
+  });	
+}
+
 function saveZhToWeb()
 {
     var zhString = "";
@@ -41,19 +65,31 @@ function saveZhToWeb()
     });	
 }
 
+function getZhWeb()
+{
+    $.getJSON("http://zplan.club",		
+        function(data){
+            var zhList = data.zhList;	
+            $.each(zhList,function(i,item){
+                // 这样每个item是一个json对象，
+                checkZhDetailAndSave(item.symbol);
+            }); 
+    });	
+}
+
 $(document).ready(function(){
 	var zhKey;
     var zhValue;
     var zhSymbol;
     var zhName;
-	var MaxInputs       = 5; //maximum input boxes allowed  
+	
 	var InputsWrapper   = $("#InputsWrapper"); //Input boxes wrapper ID  
 	var AddButton       = $("#AddMoreFileBox"); //Add button ID  
 	var SaveButton      = $("#SaveBtn");
     var SyncButton      = $("#SyncBtn");
-	var x = 0;          //initlal text box count  
-	var sumCount=1;     //to keep track of text box added  
-    
+    var DownButton      = $("#DownBtn");
+	 
+    getZhWeb()
     //alert(window.localStorage.length);
     if(window.localStorage.length < 1){
         $(InputsWrapper).append('<div style="margin:10px 0"><a href="#" class="removeclass">×</a><input type="text" style="width:128px;" class="zhItem"  id="zh_0" value=""/></div>');  
@@ -114,5 +150,8 @@ $(document).ready(function(){
 
     $(SyncButton).click(function (e){  //on add input button click  
         saveZhToWeb();
-	});     
+	});  
+    $(DownButton).click(function (e){  
+        getZhWeb()
+    }); 
 });
